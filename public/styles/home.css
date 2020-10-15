@@ -3,15 +3,12 @@ body {
   overflow: hidden;
 }
 
-.navbar {
-  position: static;
-}
-
 #homePage {
   margin-top: 0;
 }
 
 .slide {
+  padding-top: 75px;
   width: 100%;
   height: 100%;
   display: grid;
