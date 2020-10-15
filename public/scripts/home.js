@@ -6,4 +6,4 @@ function flipSlide() {
   slides[slideIndex].classList.add('showing')
 }
 
-setInterval(flipSlide, 3000)
+setInterval(flipSlide, 10000)
