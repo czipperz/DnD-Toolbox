@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.navbar {
+  position: static;
+}
+
+#homePage {
+  margin-top: 0;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+}
+.slide .text {
+  font-size: 2.5em;
+  text-align: center;
+  margin: 0 40px;
+}
+.slide figure {
+  margin: 16px 40px;
+}
+.slide figure img {
+  width: 100%;
+}
+.slide figure figcaption {
+  margin-top: 0.5em;
+  text-align: right;
+}
+
+.slide1 {
+  background-color: #444444;
+  color: white;
+}
+.slide1 figure img {
+  border-radius: 15px;
+}
+.slide2 {
+  background-color: white;
+}
+
+.slide {
+  position: absolute;
+  transition: all 0.5s ease-in-out;
+}
+.slide1 {
+  left: -100%;
+}
+.slide2 {
+  left: 100%;
+}
+.slide.showing {
+  left: 0;
+}

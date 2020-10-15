@@ -1,0 +1,105 @@
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    
+    .slide {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: auto auto;
+      align-items: center;
+    }
+    .slide .text {
+      font-size: 2.5em;
+      text-align: center;
+      margin: 0 40px;
+    }
+    .slide figure img {
+      width: 100%;
+    }
+    .slide figure figcaption {
+      margin-top: 0.5em;
+      text-align: right;
+    }
+    
+    .slide1 {
+      background-color: #444444;
+      color: white;
+    }
+    .slide1 figure img {
+      border-radius: 15px;
+    }
+    
+    .slide {
+      position: absolute;
+      transition: all 0.5s ease-in-out;
+    }
+    .slide1 {
+      left: -100%;
+    }
+    .slide2 {
+      left: 100%;
+    }
+    .slide.showing {
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="homePage">
+    <div id="slides">
+      <div class="slide slide1 showing">
+        <div class="text">
+          <p>
+            Create and manage your characters with our online character sheets.
+          </p>
+          <p>
+            Easily share your characters with your friends or your party.
+          </p>
+        </div>
+        <figure>
+          <img src="res/slide1.jpg">
+          <figcaption>
+            "Dragon" by geo462rge is licensed with CC BY-NC-ND 2.0.
+            To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/
+          </figcaption>
+        </figure>
+      </div>
+      <div class="slide slide2">
+        <div class="text">
+          <p>
+            Perform ability and skill checks in a single click.
+          </p>
+          <p>
+            Casting spells has never been so easy!
+          </p>
+        </div>
+        <figure>
+          <img src="res/slide2.png">
+          <figcaption>
+            "Gaming Dice" by Skakerman (Archive) is licensed with CC BY 2.0.
+            To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let slideIndex = 0
+    function flipSlide() {
+      const slides = document.getElementsByClassName("slide")
+      slides[slideIndex].classList.remove('showing')
+      slideIndex = (slideIndex + 1) % slides.length
+      slides[slideIndex].classList.add('showing')
+    }
+    
+    setInterval(flipSlide, 3000)
+  </script>
+</body>
+</html>
