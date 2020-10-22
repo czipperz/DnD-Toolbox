@@ -1,0 +1,22 @@
+#columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.columnDiv {
+    background-color: grey;
+    border: black solid 2px;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+    height: 800px;
+}
+
+.smallCol {
+    width: 27.5%;
+}
+
+.bigCol {
+    width: 45%;
+}
