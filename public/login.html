@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/register.css">
+  <title>DnD Toolbox</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark fixed-top">
+    <a class="navbar-brand" href="#">DnD Toolbox</a>
+  </nav>
+
+  <div id="logInPage" class="page-container">
+    <div id="logInBox">
+      <h1>Log in</h1>
+      <div class="form-group">
+        <label for="inputEmail" class="bmd-label-floating">Email address</label>
+        <input type="email" class="form-control" id="inputEmail" required>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword" class="bmd-label-floating">Password</label>
+        <input type="password" class="form-control" id="inputPassword" required minlength=6>
+      </div>
+      <div id="logInErrors">&nbsp;</div>
+      <button id="logInButton" class="btn btn-primary btn-raised">Log In</button>
+    </div>
+  </div>
+  
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/popper.js"></script>
+  <script src="scripts/bootstrap-material-design.js"></script>
+  <script>$("body").bootstrapMaterialDesign();</script>
+  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/logIn.js"></script>
+  <script src="scripts/loggedOutUsersOnly.js"></script>
+</body>
+
+</html>
