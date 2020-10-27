@@ -20,3 +20,9 @@ body {
 	text-decoration: none;
 	margin: 0 0.7em;
 }
+
+.btn.btn-raised.btn-primary {
+	color: #fff;
+	background-color: #800000;
+	border-color: #800000;
+}
