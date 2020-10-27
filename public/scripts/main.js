@@ -27,10 +27,34 @@ rhit.ClassName = class {
 	}
 }
 
+rhit.logOut = function() {
+	firebase.auth().signOut()
+}
+
+rhit.setupNavbarLinks = function() {
+	const navbarButtonsElem = document.createElement("div")
+	navbarButtonsElem.classList.add("navbar-buttons")
+	document.querySelector(".navbar").appendChild(navbarButtonsElem)
+	
+	firebase.auth().onAuthStateChanged(user => {
+		if (user) {
+			navbarButtonsElem.innerHTML =
+				'<a href="profile.html">Profile</a>' +
+				'<a class="logOutButton">Log out</a>'
+			navbarButtonsElem.querySelector(".logOutButton").onclick = rhit.logOut
+		} else {
+			navbarButtonsElem.innerHTML =
+				'<a href="register.html">Register</a>' +
+				'<a href="login.html">Log in</a>'
+		}
+	})
+}
+
 /* Main */
 /** function and class syntax examples */
 rhit.main = function () {
 	console.log("Ready");
+	rhit.setupNavbarLinks()
 };
 
 rhit.main();

@@ -10,3 +10,13 @@ body {
 .page-container {
     margin-top: 75px;
 }
+
+.navbar-buttons {
+	display: flex;
+}
+
+.navbar-buttons a {
+	color: white;
+	text-decoration: none;
+	margin: 0 0.7em;
+}
