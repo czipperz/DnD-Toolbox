@@ -22,7 +22,7 @@ body {
 }
 
 .btn.btn-raised.btn-primary {
-	color: #fff;
-	background-color: #800000;
-	border-color: #800000;
+	color: #fff !important;
+	background-color: #800000 !important;
+	border-color: #800000 !important;
 }
