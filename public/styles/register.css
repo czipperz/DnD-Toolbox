@@ -10,9 +10,13 @@
 
 #registerButton {
 	display: block;
-	margin: 2em auto 0;
+	margin: 1rem auto 0;
 }
 
-#registerBox .form-group {
-	margin-bottom: 0;
+#registerErrors {
+	color: red;
+}
+
+.is-focused [class^="bmd-label"], .is-focused [class*=" bmd-label"] {
+	color: black;
 }
