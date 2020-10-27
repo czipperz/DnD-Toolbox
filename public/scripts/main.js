@@ -40,7 +40,7 @@ rhit.setupNavbarLinks = function() {
 		if (user) {
 			navbarButtonsElem.innerHTML =
 				'<a href="profile.html">Profile</a>' +
-				'<a class="logOutButton">Log out</a>'
+				'<a href="#" class="logOutButton">Log out</a>'
 			navbarButtonsElem.querySelector(".logOutButton").onclick = rhit.logOut
 		} else {
 			navbarButtonsElem.innerHTML =

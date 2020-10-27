@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.0/firebase-ui-auth.css" />
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/register.css">
@@ -19,16 +20,21 @@
   <div id="logInPage" class="page-container">
     <div id="logInBox">
       <h1>Log in</h1>
-      <div class="form-group">
-        <label for="inputEmail" class="bmd-label-floating">Email address</label>
-        <input type="email" class="form-control" id="inputEmail" required>
+      
+      <div id="firebaseAuthUi"></div>
+      
+      <div id="logInForm">
+        <div class="form-group">
+          <label for="inputEmail" class="bmd-label-floating">Email address</label>
+          <input type="email" class="form-control" id="inputEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="bmd-label-floating">Password</label>
+          <input type="password" class="form-control" id="inputPassword" required minlength=6>
+        </div>
+        <div id="logInErrors">&nbsp;</div>
+        <button id="logInButton" class="btn btn-primary btn-raised">Log In</button>
       </div>
-      <div class="form-group">
-        <label for="inputPassword" class="bmd-label-floating">Password</label>
-        <input type="password" class="form-control" id="inputPassword" required minlength=6>
-      </div>
-      <div id="logInErrors">&nbsp;</div>
-      <button id="logInButton" class="btn btn-primary btn-raised">Log In</button>
     </div>
   </div>
   
@@ -40,6 +46,7 @@
   <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
   <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
   <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.7.0/firebase-ui-auth.js"></script>
   <script src="/__/firebase/init.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/logIn.js"></script>

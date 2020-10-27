@@ -5,7 +5,7 @@
 
 #registerBox, #logInBox {
 	margin: auto;
-	max-width: 700px;
+	max-width: 400px;
 }
 
 #registerButton, #logInButton {
@@ -13,10 +13,26 @@
 	margin: 1rem auto 0;
 }
 
-#registerErrors {
+#registerErrors, #logInErrors {
 	color: red;
 }
 
 .is-focused [class^="bmd-label"], .is-focused [class*=" bmd-label"] {
 	color: black;
+}
+
+#registerBox, #logInForm {
+	background-color: white;
+	border-radius: 2px;
+	padding: 16px;
+	margin-top: 2rem;
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.firebaseui-card-content {
+	padding: 0;
+}
+
+.firebaseui-idp-button, .firebaseui-tenant-button, .firebaseui-container {
+	max-width: none;
 }
