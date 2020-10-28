@@ -75,6 +75,6 @@ body {
 	}
 	
 	.slide .slide-spacer {
-		display: auto;
+		display: initial;
 	}
 }
