@@ -21,7 +21,7 @@ body {
   margin: 0 40px;
 }
 .slide figure {
-  margin: 16px 40px;
+  margin: 0 40px;
 }
 .slide figure img {
   max-width: 100%;
@@ -59,4 +59,15 @@ body {
 }
 .slide.showing {
   left: 0;
+}
+
+@media (max-width: 1000px) {
+	.slide {
+		grid-template-columns: auto;
+		grid-template-rows: auto auto;
+	}
+	
+	.slide figure img {
+		max-height: 40vh;
+	}
 }
