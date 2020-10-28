@@ -38,6 +38,10 @@ body {
   margin-top: 0.5em;
   text-align: center;
 }
+.slide figure figcaption a {
+	color: inherit !important;
+	text-decoration: underline;
+}
 
 .slide1 {
   background-color: #444444;
