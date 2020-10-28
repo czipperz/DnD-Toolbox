@@ -21,7 +21,7 @@ body {
 	margin: 0 0.7em;
 }
 
-.btn.btn-raised.btn-primary {
+.btn.btn-primary.btn-raised, .btn.btn-primary.bmd-btn-fab {
 	color: #fff !important;
 	background-color: #800000 !important;
 	border-color: #800000 !important;

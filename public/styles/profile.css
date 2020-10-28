@@ -1,0 +1,23 @@
+.character {
+	margin-bottom: 1em;
+}
+
+.character a {
+	color: black !important;
+	text-decoration: none !important;
+}
+
+#addNewCharacter:hover {
+	cursor: pointer;
+}
+#addNewCharacter {
+	display: flex;
+	flex-direction: columns;
+	align-items: center;
+	font-size: 1.2em;
+}
+
+#addNewCharacter button {
+	margin-right: 0.6em;
+	margin-bottom: 0;
+}
