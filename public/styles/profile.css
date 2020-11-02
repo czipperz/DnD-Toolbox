@@ -1,5 +1,11 @@
 .character {
 	margin-bottom: 1em;
+	display: flex;
+	align-items: center;
+}
+
+.character .delete {
+	margin-left: 32px;
 }
 
 .character a {

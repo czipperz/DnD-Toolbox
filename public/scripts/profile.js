@@ -35,6 +35,10 @@ class UserManager {
 			.add({ Owner: this._uid, ...defaultCharacter })
 			.then(doc => callback(doc.id))
 	}
+	
+	removeCharacter(id) {
+		db.collection("Characters").doc(id).delete()
+	}
 }
 
 function htmlToElement(html) {
@@ -57,10 +61,19 @@ class UserController {
 		
 		for (let i = 0; i < this._manager.numCharacters; ++i) {
 			const c = this._manager.getCharacter(i)
-			
-			const elem = htmlToElement('<div class="character"><h3 class="name"><a class="link"></a></h3></div>')
+
+			const name = '<h3 class="name"><a class="link"></a></h3>'
+			const info = '<div>Level <span class="level"></span> <span class="class"></span>, <span class="race"></span></div>'
+			const deleteButton = '<button type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm delete"><i class="material-icons">delete</i></button>'
+			const elem = htmlToElement('<div class="character"><div>' + name + info + '</div>' + deleteButton +  '</div>')
 			elem.querySelector(".link").href = "charPage.html?id=" + c.id
 			elem.querySelector(".link").innerText = c.Name
+			elem.querySelector(".level").innerText = c.Level
+			elem.querySelector(".class").innerText = c.Class
+			elem.querySelector(".race").innerText = c.Race
+			elem.querySelector(".delete").onclick = () => {
+				//this._manager.removeCharacter(c.id)
+			}
 			
 			newList.appendChild(elem)
 		}
