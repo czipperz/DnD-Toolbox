@@ -21,36 +21,43 @@
       <div id="statCol" class="columnDiv smallCol">
 
         <div id="stats">
-          <div class="invSquare">
+
+          <div class="invSquare" data-toggle="modal" data-target="#diceRollModal">
             <div>Strength</div>
             <div class="statValue">18</div>
             <div>+4</div>
           </div>
+
           <div class="invSquare">
             <div>Dexterity</div>
             <div class="statValue">18</div>
             <div>+4</div>
           </div>
+
           <div class="invSquare">
             <div>Constitution</div>
             <div class="statValue">18</div>
             <div>+4</div>
           </div>
+
           <div class="invSquare">
             <div>Intelligence</div>
             <div class="statValue">18</div>
             <div>+4</div>
           </div>
+
           <div class="invSquare">
             <div>Wisdom</div>
             <div class="statValue">18</div>
             <div>+4</div>
           </div>
+
           <div class="invSquare">
             <div>Charisma</div>
             <div class="statValue">18</div>
             <div>+4</div>
           </div>
+
         </div>
 
         <div id="skills">
@@ -216,7 +223,9 @@
         </div>
 
       </div>
+
       <div id="invCol" class="columnDiv smallCol">
+
         <div id="topThree" class="invRow">
           <div class="invSquare2">
             <div class="statValue">15</div>
@@ -231,20 +240,109 @@
             <div class="col2Text">Speed</div>
           </div>
         </div>
+
         <div id="healthRow" class="invRow">
+          <button id="minusHealth" type="button" class="btn bmd-btn-fab">
+            <i class="material-icons">remove</i>
+          </button>
           <div class="invSquare2">
             <div class="statValue">44</div>
             <div class="col2Text">Health</div>
           </div>
+          <button id="plusHealth" type="button" class="btn bmd-btn-fab">
+            <i class="material-icons">add</i>
+          </button>
         </div>
+
         <div id="tempHealthRow" class="invRow">
+          <button id="minusTempHealth" type="button" class="btn bmd-btn-fab">
+            <i class="material-icons">remove</i>
+          </button>
           <div class="invSquare2">
             <div class="statValue">44</div>
             <div class="col2Text">Temp Health</div>
           </div>
+          <button id="plusTempHealth" type="button" class="btn bmd-btn-fab">
+            <i class="material-icons">add</i>
+          </button>
         </div>
+
+        <div id="hitDiceDeathSaves" class="invRow">
+          <div id="hitDice">
+            <div class="statValue">3d8</div>
+            <div class="col2Text">Hit Dice</div>
+          </div>
+
+          <div id="deathSave">
+            <div class="dSaveRow">
+              Successes
+              <input type="checkbox">
+              <input type="checkbox">
+              <input type="checkbox">
+            </div>
+
+            <div class="dSaveRow">
+              Failures
+              <input type="checkbox">
+              <input type="checkbox">
+              <input type="checkbox">
+            </div>
+
+            <div class="col2Text">
+              Death Saves
+            </div>
+
+          </div>
+        </div>
+
+        <div id="weaponBox" class="invRow boxRow">
+          <div class="weaponRow">
+            asd
+          </div>
+
+          <div class="weaponRow">
+            asd
+          </div>
+
+          <div class="weaponRow">
+            asd
+          </div>
+
+          <div class="col2Text">Attacks</div>
+        </div>
+
+        <div id="inventoryRow" class="invRow boxRow">
+          asd
+        </div>
+
       </div>
       <div class="columnDiv bigCol">a</div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="diceRollModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Dice Roll</h5>
+        </div>
+        <div class="modal-body">
+
+          <p>
+            <strong>You rolled:</strong>
+            <p id="rollText">1d20 + 4</p>
+          </p>
+          <br>
+          <p>
+            <strong>Result:</strong>
+            <p id="resultText">12</p>
+          </p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
   
