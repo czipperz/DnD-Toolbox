@@ -18,6 +18,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
+	flex-wrap: wrap;
 }
 
 .columnDiv {
@@ -27,6 +28,7 @@ body {
     margin: 5px;
     display: flex;
     height: 780px;
+    min-height: 100px;
 }
 
 .smallCol {
@@ -35,8 +37,8 @@ body {
 }
 
 .bigCol {
-    min-width: 630px;
-    max-width: 630px;
+    width: 630px;
+    max-width: 100%;
 }
 
 .invSquare {
@@ -303,10 +305,4 @@ body {
 .editable:disabled {
     background-color: white;
     cursor: pointer;
-}
-
-@media (max-width: 1320px) {
-    #columns {
-        justify-content: space-between;
-    }
 }
