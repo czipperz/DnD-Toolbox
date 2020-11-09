@@ -13,98 +13,128 @@
 
 <body>
   <nav class="navbar navbar-dark fixed-top">
-    <a class="navbar-brand" href="#">DnD Toolbox</a>
+    <a class="navbar-brand" href="/profile.html">DnD Toolbox</a>
   </nav>
 
   <div id="homePage" class="page-container">
+    <div id="infoRow">
+      <div class="infoCol">
+        <div class="col2Text">Character Name:</div>
+        <input id="charName" class="infoInput editable" disabled></input>
+      </div>
+
+      <div class="infoCol">
+        <div class="col2Text">Level & Class:</div>
+        <input id="charLevel" class="infoInput editable" disabled></input>
+      </div>
+
+      <div class="infoCol">
+        <div class="col2Text">Race:</div>
+        <input id="charRace" class="infoInput editable" disabled></input>
+      </div>
+
+      <div class="infoCol">
+        <div class="col2Text">Alignment:</div>
+        <input id="charAli" class="infoInput editable" disabled></input>
+      </div>
+
+      <div class="infoCol">
+        <div class="col2Text">Background:</div>
+        <input id="charBack" class="infoInput editable" disabled></input>
+      </div>
+
+      <button id="charButton">Edit</button>
+
+    </div>
+
     <div id="columns">
       <div id="statCol" class="columnDiv smallCol">
 
         <div id="stats">
 
-          <div class="invSquare" data-toggle="modal" data-target="#diceRollModal">
+          <div class="invSquare" >
             <div>Strength</div>
-            <div class="statValue">18</div>
-            <div>+4</div>
+            <input id="str" class="statValue main6 editable" value="" disabled></input>
+            <div id="strMod"></div>
           </div>
 
           <div class="invSquare">
             <div>Dexterity</div>
-            <div class="statValue">18</div>
-            <div>+4</div>
+            <input id="dex" class="statValue main6 editable" value="" disabled></input>
+            <div id="dexMod"></div>
           </div>
 
           <div class="invSquare">
             <div>Constitution</div>
-            <div class="statValue">18</div>
-            <div>+4</div>
+            <input id="con" class="statValue main6 editable" value="" disabled></input>
+            <div id="conMod"></div>
           </div>
 
           <div class="invSquare">
             <div>Intelligence</div>
-            <div class="statValue">18</div>
-            <div>+4</div>
+            <input id="int" class="statValue main6 editable" value="" disabled></input>
+            <div id="intMod"></div>
           </div>
 
           <div class="invSquare">
             <div>Wisdom</div>
-            <div class="statValue">18</div>
-            <div>+4</div>
+            <input id="wis" class="statValue main6 editable" value="" disabled></input>
+            <div id="wisMod"></div>
           </div>
 
           <div class="invSquare">
             <div>Charisma</div>
-            <div class="statValue">18</div>
-            <div>+4</div>
+            <input id="cha" class="statValue main6 editable" value="" disabled></input>
+            <div id="chaMod"></div>
           </div>
 
         </div>
 
         <div id="skills">
           <div class="inspAndProf">
-            <div id="insp" class="boxedNumber">5</div>
+            <input id="insp" class="boxedNumber editable" value=""></input>
             <div style="margin-right: 27px;">Inspiration</div>
           </div>
 
           <div class="inspAndProf">
-            <div id="prof" class="boxedNumber">5</div>
+            <input id="prof" class="boxedNumber editable" value=""></input>
             <div>Proficiency Bonus</div>
           </div>
 
           <div class="manySkills">
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="strSkillMod" class="skill" type="checkbox">
+              <u id="strSkill" class="skillValue">+0</u>
               <div>Strength</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="dexSkillMod" class="skill" type="checkbox">
+              <u id="dexSkill" class="skillValue">+0</u>
               <div>Dexterity</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="conSkillMod" class="skill" type="checkbox">
+              <u id="conSkill" class="skillValue">+0</u>
               <div>Constitution</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="intSkillMod" class="skill" type="checkbox">
+              <u id="intSkill" class="skillValue">+0</u>
               <div>Intelligence</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="wisSkillMod" class="skill" type="checkbox">
+              <u id="wisSkill" class="skillValue">+0</u>
               <div>Wisdom</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="chaSkillMod" class="skill" type="checkbox">
+              <u id="chaSkill" class="skillValue">+0</u>
               <div>Charisma</div>
             </div>
 
@@ -112,110 +142,110 @@
 
           <div class="manySkills">
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="acroMod" class="skill" type="checkbox">
+              <u id="acro" class="skillValue">+0</u>
               <div>Acrobatics</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="aniMod" class="skill" type="checkbox">
+              <u id="ani" class="skillValue">+0</u>
               <div>Animal Handling</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="arcMod" class="skill" type="checkbox">
+              <u id="arc" class="skillValue">+0</u>
               <div>Arcana</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="athMod" class="skill" type="checkbox">
+              <u id="ath" class="skillValue">+0</u>
               <div>Athletics</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="decMod" class="skill" type="checkbox">
+              <u id="dec" class="skillValue">+0</u>
               <div>Deception</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="hisMod" class="skill" type="checkbox">
+              <u id="his" class="skillValue">+0</u>
               <div>History</div>
             </div>
             
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="insMod" class="skill" type="checkbox">
+              <u id="ins" class="skillValue">+0</u>
               <div>Insight</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="intimiMod" class="skill" type="checkbox">
+              <u id="intimi" class="skillValue">+0</u>
               <div>Intimidation</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="invMod" class="skill" type="checkbox">
+              <u id="inv" class="skillValue">+0</u>
               <div>Investigation</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="medMod" class="skill" type="checkbox">
+              <u id="med" class="skillValue">+0</u>
               <div>Medicine</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="natMod" class="skill" type="checkbox">
+              <u id="nat" class="skillValue">+0</u>
               <div>Nature</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="percMod" class="skill" type="checkbox">
+              <u id="perc" class="skillValue">+0</u>
               <div>Perception</div>
             </div>
             
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="perfMod" class="skill" type="checkbox">
+              <u id="perf" class="skillValue">+0</u>
               <div>Performance</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="persMod" class="skill" type="checkbox">
+              <u id="pers" class="skillValue">+0</u>
               <div>Persuasion</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="relMod" class="skill" type="checkbox">
+              <u id="rel" class="skillValue">+0</u>
               <div>Religion</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="sleMod" class="skill" type="checkbox">
+              <u id="sle" class="skillValue">+0</u>
               <div>Sleight of Hand</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="steMod" class="skill" type="checkbox">
+              <u id="ste" class="skillValue">+0</u>
               <div>Stealth</div>
             </div>
 
             <div class="singleSkill">
-              <input type="checkbox">
-              <u id="" class="skillValue">+1</u>
+              <input id="surMod" class="skill" type="checkbox">
+              <u id="sur" class="skillValue">+0</u>
               <div>Survival</div>
             </div>
 
@@ -228,15 +258,17 @@
 
         <div id="topThree" class="invRow">
           <div class="invSquare2">
-            <div class="statValue">15</div>
+            <input id="AC" class="statValue editable" value="" disabled></input>
             <div class="col2Text">Armor Class</div>
           </div>
+
           <div class="invSquare2">
-            <div class="statValue">+4</div>
+            <input id="ini" class="statValue editable" value="" disabled></input>
             <div class="col2Text">Initiative</div>
           </div>
+
           <div class="invSquare2">
-            <div class="statValue">30</div>
+            <input id="speed" class="statValue editable" value="" disabled></input>
             <div class="col2Text">Speed</div>
           </div>
         </div>
@@ -245,10 +277,12 @@
           <button id="minusHealth" type="button" class="btn bmd-btn-fab">
             <i class="material-icons">remove</i>
           </button>
+
           <div class="invSquare2">
-            <div class="statValue">44</div>
+            <input id="health" class="statValue editable" value="" disabled></input>
             <div class="col2Text">Health</div>
           </div>
+
           <button id="plusHealth" type="button" class="btn bmd-btn-fab">
             <i class="material-icons">add</i>
           </button>
@@ -258,10 +292,12 @@
           <button id="minusTempHealth" type="button" class="btn bmd-btn-fab">
             <i class="material-icons">remove</i>
           </button>
+
           <div class="invSquare2">
-            <div class="statValue">44</div>
+            <input id="tempHealth" class="statValue editable" value="" disabled></input>
             <div class="col2Text">Temp Health</div>
           </div>
+
           <button id="plusTempHealth" type="button" class="btn bmd-btn-fab">
             <i class="material-icons">add</i>
           </button>
@@ -269,7 +305,7 @@
 
         <div id="hitDiceDeathSaves" class="invRow">
           <div id="hitDice">
-            <div class="statValue">3d8</div>
+            <input id="healthDice" class="statValue editable" value="" disabled></input>
             <div class="col2Text">Hit Dice</div>
           </div>
 
@@ -297,26 +333,62 @@
 
         <div id="weaponBox" class="invRow boxRow">
           <div class="weaponRow">
-            asd
+            <input id="wep1" class="weaponWide wep editable" value="" disabled></input>
+            <input id="hit1" class="weaponShort wep editable" value="" disabled></input>
+            <input id="dam1" class="weaponWide wep editable" value="" disabled></input>
           </div>
 
           <div class="weaponRow">
-            asd
+            <input id="wep2" class="weaponWide wep editable" value="" disabled></input>
+            <input id="hit2" class="weaponShort wep editable" value="" disabled></input>
+            <input id="dam2" class="weaponWide wep editable" value="" disabled></input>
           </div>
 
           <div class="weaponRow">
-            asd
+            <input id="wep3" class="weaponWide wep editable" value="" disabled></input>
+            <input id="hit3" class="weaponShort wep editable" value="" disabled></input>
+            <input id="dam3" class="weaponWide wep editable" value="" disabled></input>
           </div>
 
           <div class="col2Text">Attacks</div>
         </div>
 
         <div id="inventoryRow" class="invRow boxRow">
-          asd
+          <div id="equipRow">
+            <div id="goldCol">
+              <div class="goldBox goldRow">
+                <div>PP:</div>
+                <input id="PP" class="goldNum editable" value="" disabled></input>
+              </div>
+
+              <div class="goldBox goldRow">
+                <div>GP:</div>
+                <input id="GP" class="goldNum editable" value="" disabled></input>
+              </div>
+
+              <div class="goldBox goldRow">
+                <div>SP:</div>
+                <input id="SP" class="goldNum editable" value="" disabled></input>
+              </div>
+
+              <div class="goldBox goldRow">
+                <div>CP:</div>
+                <input id="CP" class="goldNum editable" value="" disabled></input>
+              </div>
+
+            </div>
+
+            <div id="equipment" id="equipText"></div>
+          </div>
+
+          <div class="col2Text">Equipment</div>
         </div>
 
       </div>
-      <div class="columnDiv bigCol">a</div>
+
+      <div id="featsCol" class="columnDiv bigCol">
+        <textarea id="feats" class="editable" disabled></textarea>
+      </div>
     </div>
   </div>
 

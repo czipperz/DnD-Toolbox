@@ -5,7 +5,7 @@ const defaultCharacter = {}
 class UserManager {
 	constructor(uid) {
 		this._uid = uid
-		this._ref = db.collection("Characters").where("Owner", "==", uid)
+		this._ref = db.collection("Characters").where("owner", "==", uid)
 	}
 	
 	startListening(callback) {
@@ -63,14 +63,13 @@ class UserController {
 			const c = this._manager.getCharacter(i)
 
 			const name = '<h3 class="name"><a class="link"></a></h3>'
-			const info = '<div>Level <span class="level"></span> <span class="class"></span>, <span class="race"></span></div>'
+			const info = '<div>Level <span class="level"></span>, <span class="race"></span></div>'
 			const deleteButton = '<button type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm delete"><i class="material-icons">delete</i></button>'
 			const elem = htmlToElement('<div class="character"><div>' + name + info + '</div>' + deleteButton +  '</div>')
 			elem.querySelector(".link").href = "charPage.html?id=" + c.id
-			elem.querySelector(".link").innerText = c.Name
-			elem.querySelector(".level").innerText = c.Level
-			elem.querySelector(".class").innerText = c.Class
-			elem.querySelector(".race").innerText = c.Race
+			elem.querySelector(".link").innerText = c.name
+			elem.querySelector(".level").innerText = c.level
+			elem.querySelector(".race").innerText = c.race
 			elem.querySelector(".delete").onclick = () => {
 				//this._manager.removeCharacter(c.id)
 			}
