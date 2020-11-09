@@ -152,17 +152,17 @@ class CharacterController {
                     const type = button.dataset.type == "temp";
                     console.log(direction, type);
                     let int = 0;
-                    let button = null;
+                    let valButton = null;
                     if (type) {
-                        button = document.querySelector("#tempHealth");
-                        int = parseInt(button.value);
+                        valButton = document.querySelector("#tempHealth");
+                        int = parseInt(valButton.value);
                         int += direction;
-                        button.value = int;
+                        valButton.value = int;
                     } else {
-                        button = document.querySelector("#health");
-                        int = parseInt(button.value);
+                        valButton = document.querySelector("#health");
+                        int = parseInt(valButton.value);
                         int += direction;
-                        button.value = int;
+                        valButton.value = int;
                     }
                 }
             };
