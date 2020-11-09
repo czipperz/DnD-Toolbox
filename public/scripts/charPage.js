@@ -166,6 +166,51 @@ class CharacterController {
                     }
                 }
             };
+            document.querySelector("#rollButton").onclick = (event) => {
+                let dice = parseInt(document.querySelector("#numDice").value) || 0;
+                let sides = parseInt(document.querySelector("#numSides").value) || 0;
+                let mod = parseInt(document.querySelector("#rollMod").value) || 0;
+                if (dice == 0 || sides == 0) {
+                    return;
+                }
+                let resultText = "";
+                let result = 0;
+                let tempNum = 0;
+                for (let i = 0; i < dice; i++) {
+                    tempNum = Math.floor(Math.random() * sides) + 1;
+                    if (i != 0) {
+                        if (mod != 0) {
+                            resultText += (", " + tempNum.toString() + "+" + mod.toString())
+                        } else {
+                            resultText += (", " + tempNum.toString());
+                        }
+                    } else {
+                        if (mod != 0) {
+                            resultText += tempNum.toString() + "+" + mod.toString();
+                        } else {
+                            resultText += tempNum.toString();
+                        }
+                    }
+                    result += (tempNum + mod);
+                }
+                document.querySelector("#resultText").innerHTML = resultText;
+                document.querySelector("#results").innerHTML = result.toString();
+
+            }
+
+            $("#diceRollModal").on("show.bs.modal", (event) => {
+                // Pre animation
+                document.querySelector("#numDice").value = "";
+                document.querySelector("#numSides").value = "";
+                document.querySelector("#rollMod").value = "";
+
+            });
+    
+            $("#diceRollModal").on("shown.bs.modal", (event) => {
+                //Post animation
+                document.querySelector("#numDice").focus();
+            });
+
         }
         
     }

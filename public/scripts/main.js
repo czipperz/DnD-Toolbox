@@ -38,9 +38,16 @@ rhit.setupNavbarLinks = function() {
 	
 	firebase.auth().onAuthStateChanged(user => {
 		if (user) {
-			navbarButtonsElem.innerHTML =
+			if (document.querySelector("#charPage")) {
+				navbarButtonsElem.innerHTML =
+				'<a href="#" data-toggle="modal" data-backdrop="static" data-target="#diceRollModal">Roll Dice</a>' +
 				'<a href="profile.html">Profile</a>' +
 				'<a href="#" class="logOutButton">Log out</a>'
+			} else {
+				navbarButtonsElem.innerHTML =
+				'<a href="profile.html">Profile</a>' +
+				'<a href="#" class="logOutButton">Log out</a>'
+			}
 			navbarButtonsElem.querySelector(".logOutButton").onclick = rhit.logOut
 		} else {
 			navbarButtonsElem.innerHTML =

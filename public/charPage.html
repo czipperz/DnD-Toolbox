@@ -16,7 +16,7 @@
     <a class="navbar-brand" href="/profile.html">DnD Toolbox</a>
   </nav>
 
-  <div id="homePage" class="page-container">
+  <div id="charPage" class="page-container">
     <div id="infoRow">
       <div class="infoCol">
         <div class="col2Text">Character Name:</div>
@@ -396,23 +396,35 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Dice Roll</h5>
+          <h5 class="modal-title">Roll Some Dice!</h5>
         </div>
         <div class="modal-body">
 
-          <p>
-            <strong>You rolled:</strong>
-            <p id="rollText">1d20 + 4</p>
-          </p>
+          <div>
+            <strong>What would you like to roll?</strong>
+            <div class="row">
+              <div class="col">
+                <input id="numDice" type="text" class="form-control" placeholder="Number of Dice">
+              </div>
+              <div class="col">
+                <input id="numSides" type="text" class="form-control" placeholder="Number of Sides">
+              </div>
+              <div class="col">
+                <input id="rollMod" type="text" class="form-control" placeholder="Modifier">
+              </div>
+            </div>
+          </div>
           <br>
           <p>
-            <strong>Result:</strong>
-            <p id="resultText">12</p>
+            <strong>Results:</strong>
+            <p id="resultText">&nbsp;</p>
+            <p id="results">&nbsp;</p>
           </p>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="rollButton" type="button" class="btn btn-secondary">Roll</button>
         </div>
       </div>
     </div>
