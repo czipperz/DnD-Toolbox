@@ -71,7 +71,7 @@ class UserController {
 			elem.querySelector(".level").innerText = c.level
 			elem.querySelector(".race").innerText = c.race
 			elem.querySelector(".delete").onclick = () => {
-				//this._manager.removeCharacter(c.id)
+				this._manager.removeCharacter(c.id)
 			}
 			
 			newList.appendChild(elem)
@@ -84,6 +84,10 @@ class UserController {
 
 function setupProfile(uid) {
 	new UserController(uid)
+}
+
+function createCharacter() {
+	window.location.href = "/charPage.html?newChar=1"
 }
 
 firebase.auth().onAuthStateChanged(user => {

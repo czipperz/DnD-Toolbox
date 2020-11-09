@@ -41,7 +41,6 @@ class CharacterManager {
     beginListening(changeListener) {
         this.unsubscribe = this.ref.onSnapshot((doc) => {
             if (doc.exists) {
-                console.log("Document data:", doc.data());
                 this.character = doc;
                 changeListener();
             } else {
@@ -50,50 +49,58 @@ class CharacterManager {
         });
     }
     saveChar() {
+        let stats = [];
+        document.querySelectorAll(".main6").forEach((element) => {
+            stats.push(element.value);
+        });
+        let proficiencies = [];
+        document.querySelectorAll(".skill:checked").forEach((element) => {
+            proficiencies.push(element.id);
+        });
+        let weapons = [];
+        document.querySelectorAll(".wep").forEach((element) => {
+            weapons.push(element.value);
+        });
+        let gold = [];
+        document.querySelectorAll(".goldNum").forEach((element) => {
+            gold.push(element.value);
+        });
+        let character = {
+            "name": $("#charName").val(),
+            "level": $("#charLevel").val(),
+            "race": $("#charRace").val(),
+            "align": $("#charAli").val(),
+            "background": $("#charBack").val(),
+            "stats": stats,
+            "profs": proficiencies,
+            "insp": $("#insp").val(),
+            "prof": $("#prof").val(),
+            "ac": $("#AC").val(),
+            "init": $("#ini").val(),
+            "speed": $("#speed").val(),
+            "health": $("#health").val(),
+            "tempHealth": $("#tempHealth").val(),
+            "healthDice": $("#healthDice").val(),
+            "weapons": weapons,
+            "gold": gold,
+            "equipment": $("#equipment").val(),
+            "feats": $("#feats").val(),
+            "owner": this.uid,
+            "lastChanged": firebase.firestore.Timestamp.now()
+        }
         if (this.ref) {
             //Update existing character
+            this.ref.update(character)
+            .then(function () {
+                console.log("Character updated!");
+            })
+            .catch(function (error){
+                console.error("Error updating character:", error);
+            });
         } else {
             //Creating a new character
             const db = firebase.firestore().collection("Characters");
-            //This is gonna be a bit messy. Lots of variables to deal with here
-            let stats = [];
-            document.querySelectorAll(".main6").forEach((element) => {
-                stats.push(element.value);
-            });
-            let proficiencies = [];
-            document.querySelectorAll(".skill:checked").forEach((element) => {
-                proficiencies.push(element.id);
-            });
-            let weapons = [];
-            document.querySelectorAll(".wep").forEach((element) => {
-                weapons.push(element.value);
-            });
-            let gold = [];
-            document.querySelectorAll(".goldNum").forEach((element) => {
-                weapons.push(element.value);
-            });
-            db.add({
-                "name": $("#charName").val(),
-                "level": $("#charLevel").val(),
-                "race": $("#charRace").val(),
-                "align": $("#charAli").val(),
-                "background": $("#charBack").val(),
-                "stats": stats,
-                "profs": proficiencies,
-                "insp": $("#insp").val(),
-                "prof": $("#prof").val(),
-                "ac": $("#AC").val(),
-                "init": $("#ini").val(),
-                "speed": $("#speed").val(),
-                "health": $("#health").val(),
-                "tempHealth": $("#tempHealth").val(),
-                "healthDice": $("#healthDice").val(),
-                "weapons": weapons,
-                "gold": gold,
-                "equipment": $("#equipment").val(),
-                "feats": $("#feats").val(),
-                "owner": this.uid
-            })
+            db.add(character)
             .then((docRef) => {
                 console.log("Character created with id: " + docRef.id);
                 window.location.href = "/charPage.html?id="+docRef.id;
@@ -133,7 +140,32 @@ class CharacterController {
         if (urlParams.get("newChar")) {
             this.setupEditCharacter();
         } else {
-            characterManager.beginListening(this.updateView.bind(this))
+            characterManager.beginListening(this.updateView.bind(this));
+            const button = document.querySelector("#charButton");
+            button.onclick = (event) => {
+                this.setupEditCharacter();
+            }
+            const buttons = document.querySelectorAll(".healthButton");
+            for (const button of buttons) {
+                button.onclick = (event) => {
+                    const direction = parseInt(button.dataset.direction);
+                    const type = button.dataset.type == "temp";
+                    console.log(direction, type);
+                    let int = 0;
+                    let button = null;
+                    if (type) {
+                        button = document.querySelector("#tempHealth");
+                        int = parseInt(button.value);
+                        int += direction;
+                        button.value = int;
+                    } else {
+                        button = document.querySelector("#health");
+                        int = parseInt(button.value);
+                        int += direction;
+                        button.value = int;
+                    }
+                }
+            };
         }
         
     }
@@ -147,19 +179,53 @@ class CharacterController {
             characterManager.saveChar();
         }
     }
+
     updateView(){
+        document.querySelectorAll(".editable").forEach((element) => {
+            element.setAttribute("disabled", "");
+        });
+        const button = document.querySelector("#charButton");
+        button.innerHTML = "Edit";
+        button.onclick = (event) => {
+            this.setupEditCharacter();
+        }
         let char = characterManager.getCharacter();
         $("#charName").val(char.name);
         $("#charLevel").val(char.level);
         $("#charRace").val(char.race);
         $("#charAli").val(char.align);
         $("#charBack").val(char.background);
-        $(".main6").each((index) => {
-            $(this).val(char.stats[index]);
-            //more to do here
+        $(".main6").each((index, element) => {
+            $(element).val(char.stats[index]);
+            let modId = "#" + element.id + "Mod";
+            let modVal = Math.floor((parseInt(char.stats[index]) - 10) / 2);
+            if (modVal >= 0) {
+                modVal = "+" + modVal.toString();
+            } else {
+                modVal = modVal.toString();
+            }
+            $(modId).html(modVal);
         })
         for (let i = 0; i < char.profs.length; i++) {
-            //stuff to do here
+            document.querySelector("#" + char.profs[i]).checked = true;
+        }
+        let defArr = ["strDef", "dexDef", "conDef", "intDef", "wisDef", "chaDef"];
+        let modVal = 0;
+        let tempInt = 0;
+        for (let k = 0; k < defArr.length; k++) {
+            modVal = Math.floor((parseInt(char.stats[k]) - 10) / 2);
+            document.querySelectorAll("." + defArr[k]).forEach((element) => {
+                tempInt = modVal;
+                if (document.querySelector("#" + element.id + "Mod").checked) {
+                    tempInt += parseInt(char.prof);
+                }
+                if (tempInt >= 0) {
+                    tempInt = "+" + tempInt.toString();
+                } else {
+                    tempInt = tempInt.toString();
+                }
+                element.innerHTML = tempInt;
+            }) 
         }
         $("#insp").val(char.insp);
         $("#prof").val(char.prof);
@@ -169,11 +235,11 @@ class CharacterController {
         $("#health").val(char.health);
         $("#tempHealth").val(char.tempHealth);
         $("#healthDice").val(char.healthDice);
-        $(".wep").each((index) => {
-            $(this).val(char.weapons[index]);
+        $(".wep").each((index, element) => {
+            $(element).val(char.weapons[index]);
         })
-        $(".goldNum").each((index) => {
-            $(this).val(char.gold[index]);
+        $(".goldNum").each((index, element) => {
+            $(element).val(char.gold[index]);
         })
         $("#equipment").val(char.equipment);
         $("#feats").val(char.feats);
