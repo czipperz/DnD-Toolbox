@@ -162,8 +162,6 @@ body {
 }
 
 #minusHealth, #plusHealth, #minusTempHealth, #plusTempHealth {
-    background-color: #800000;
-    color: white;
     margin: 0 20px;
 }
 
