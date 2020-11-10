@@ -312,3 +312,51 @@ body {
         justify-content: space-between;
     }
 }
+
+
+
+/* Spells */
+
+#spells {
+	display: flex;
+	margin: 16px 0;
+}
+
+#spells, #spells > * {
+	padding: 0 5px;
+}
+
+#spellsRefreshCol {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: min-content;
+}
+
+
+#spellLevelList {
+	flex-grow: 1;
+	display: flex;
+	flex-flow: column nowrap;
+	font-size: 1.2rem;
+}
+#spellLevelList > .spacer {
+	border: 1px solid black;
+}
+#spellLevelList > div:first-child {
+	font-size: 1rem;
+}
+#spellLevelList > div {
+	width: 100%;
+	flex-grow: 1;
+	
+	display: flex;
+	flex-wrap: nowrap;
+}
+#spellLevelList > div > div {
+	flex-basis: 0;
+	flex-grow: 1;
+	
+	display: flex;
+	padding: 0 10px;
+}
