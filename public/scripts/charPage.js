@@ -292,6 +292,11 @@ class CharacterController {
 }
 
 main = function () {
+	if (!urlParams.get("id") && !urlParams.get("newChar")) {
+		window.location.href = "/profile.html"
+		return
+	}
+
 	firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
             window.location.href = "/"
