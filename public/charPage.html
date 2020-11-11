@@ -401,31 +401,36 @@
           </button>
         </div>
       </div>
-      <div id="spellLevelList">
-        <div>
+      <div id="spellLevelListWrapper">
+        <div class="dnd-row dnd-header">
           <div class="level">Spell Level</div>
           <div class="name">Spell</div>
           <div class="dice">Dice</div>
         </div>
         
-        <div>
-          <div class="level">0 (Cantrips):</div>
-          <div class="name">Sacred Flame</div>
-          <div class="dice">1d6</div>
-        </div>
-        
-        <div>
-          <div class="level"></div>
-          <div class="name">Sacred Flame</div>
-          <div class="dice">1d6</div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div>
-          <div class="level">1 (5/8)</div>
-          <div class="name">Sacred Flame</div>
-          <div class="dice">1d6</div>
+        <div id="spellLevelList">
+          <!--
+          <div class="dnd-row">
+            <div class="level">0 (Cantrips):</div>
+            <div class="name">Sacred Flame</div>
+            <div class="dice">1d6</div>
+          </div>
+          
+          <div class="dnd-row">
+            <div class="level"></div>
+            <div class="name">Sacred Flame</div>
+            <div class="dice">1d6</div>
+          </div>
+          
+          <div class="dnd-spacer"></div>
+          
+          <div class="dnd-row">
+            <div class="level">1 (5/8)</div>
+            <div class="name">Sacred Flame</div>
+            <div class="dice">1d6</div>
+          </div>
+          -->
+          <div>Spells cannot be edited until the character is created</div>
         </div>
       </div>
     </div>
@@ -464,6 +469,69 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button id="rollButton" type="button" class="btn btn-secondary">Roll</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="addSpell" tabindex="-1" role="dialog" aria-labelledby="Add Spell" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Spell</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            Add level <span id="addSpell-level"></span> spell:
+          </div>
+          
+          <div class="form-group">
+            <label for="addSpell-name" class="bmd-label-floating">Name</label>
+            <input type="text" class="form-control" id="addSpell-name" required>
+          </div>
+          <div class="form-group">
+            <label for="addSpell-dice" class="bmd-label-floating">Dice</label>
+            <input type="text" class="form-control" id="addSpell-dice">
+          </div>
+          
+          <div id="addSpell-errors"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="addSpell-submit">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="addSpellLevel" tabindex="-1" role="dialog" aria-labelledby="Add Spell Level" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Spell Level</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="addSpellLevel-level" class="bmd-label-floating">Level</label>
+            <input type="number" class="form-control" id="addSpellLevel-level" required min="0">
+          </div>
+          <div class="form-group">
+            <label for="addSpellLevel-max" class="bmd-label-floating">Maximum Spell Points</label>
+            <input type="number" class="form-control" id="addSpellLevel-max" min="0">
+            <span class="bmd-help">Leave empty to have no maximum.</span>
+          </div>
+          
+          <div id="addSpellLevel-errors"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="addSpellLevel-submit">Save changes</button>
         </div>
       </div>
     </div>

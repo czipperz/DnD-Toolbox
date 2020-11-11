@@ -1,5 +1,7 @@
 characterManager = null;
 characterController = null;
+spellsManager = null;
+spellsController = null;
 const urlParams = new URLSearchParams(window.location.search);
 
 class Character {
@@ -294,6 +296,269 @@ class CharacterController {
     }
 }
 
+class Spell {
+    constructor(character, dice, level, name) {
+        this.character = character
+        this.dice = dice
+        this.level = level
+        this.name = name
+    }
+}
+
+class SpellLevel {
+    constructor(character, level, current, max) {
+        this.character = character
+        this.level = level
+        this.current = current || null
+        this.max = max || null
+    }
+}
+
+class SpellsManager {
+    constructor(character) {
+        this.character = character
+        this.spellsRef = firebase.firestore().collection("Spells")
+            .where("character", "==", character)
+            .orderBy("level")
+            .orderBy("name");
+        this.spellLevelsRef = firebase.firestore().collection("SpellLevels")
+            .where("character", "==", character)
+            .orderBy("level");
+    }
+
+    beginListening(changeListener) {
+        this.unsubscribeSpells = this.spellsRef.onSnapshot(snap => {
+            this.spells = snap.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+            changeListener(false)
+        })
+        this.unsubscribeSpellLevels = this.spellLevelsRef.onSnapshot(snap => {
+            this.spellLevels = snap.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+            changeListener(true)
+        })
+    }
+
+    stopListening() {
+        this.unsubscribeSpells()
+        this.unsubscribeSpellLevels()
+    }
+    
+    addSpell(name, dice, level) {
+        firebase.firestore().collection("Spells")
+            .add({ name, dice, level, character: this.character })
+    }
+    
+    addSpellLevel(level, max) {
+        let obj = { level, character: this.character }
+        if (max != null) {
+            obj.max = max
+        }
+        firebase.firestore().collection("SpellLevels")
+            .add(obj)
+    }
+}
+
+class SpellsController {
+    constructor() {
+        this.promise = Promise.resolve(null)
+        this.spellsProduced = false
+        this.spellLevelsProduced = false
+        spellsManager.beginListening(this.updateViewWrapper.bind(this))
+        
+        $('#addSpell').on('show.bs.modal', (event) => {
+            const level = $(event.relatedTarget).data('level')
+            document.getElementById("addSpell-level").innerText = level
+            
+            document.getElementById("addSpell-name").value = ""
+            document.getElementById("addSpell-dice").value = ""
+        })
+        $('#addSpell').on('shown.bs.modal', (event) => {
+            document.getElementById("addSpell-name").focus()
+        })
+        
+        document.getElementById("addSpell-submit").onclick = () => {
+            const nameE = document.getElementById("addSpell-name")
+            const dice = document.getElementById("addSpell-dice").value
+            const level = parseInt(document.getElementById("addSpell-level").innerText, 10)
+            
+            const errorsE = document.getElementById("addSpell-errors")
+            errorsE.innerText = ""
+            if (!nameE.checkValidity()) {
+                errorsE.innerText = "Must specify a name"
+                return
+            }
+            
+            console.log("name:", nameE.value)
+            console.log("dice:", dice)
+            console.log("level:", level)
+            spellsManager.addSpell(nameE.value, dice, level)
+            
+            $('#addSpell').modal('hide')
+        }
+        
+        $('#addSpellLevel').on('show.bs.modal', (event) => {
+            document.getElementById("addSpellLevel-level").value = ""
+            document.getElementById("addSpellLevel-max").value = ""
+        })
+        $('#addSpell').on('shown.bs.modal', (event) => {
+            document.getElementById("addSpellLevel-level").focus()
+        })
+        
+        document.getElementById("addSpellLevel-submit").onclick = () => {
+            const levelE = document.getElementById("addSpellLevel-level")
+            const maxE = document.getElementById("addSpellLevel-max")
+            
+            const errorsE = document.getElementById("addSpellLevel-errors")
+            errorsE.innerText = ""
+            if (!levelE.checkValidity()) {
+                errorsE.innerText = "Must specify a level"
+                return
+            }
+            if (!maxE.checkValidity()) {
+                errorsE.innerText = "Must specify a valid number of maximum spell points"
+                return
+            }
+            
+            const level = parseInt(levelE.value, 10)
+            const max = maxE.value == "" ? null : parseInt(maxE.value, 10)
+            console.log("level:", level)
+            console.log("max:", max)
+            spellsManager.addSpellLevel(level, max)
+            
+            $('#addSpellLevel').modal('hide')
+        }
+    }
+    
+    updateViewWrapper(isLevels) {
+        // Using the promise as a wrapper forces each invocation of the callback to happpen
+        // sequentially.  This prevents simultaneous edits of the html when the spells and spell
+        // levels collections are updated at almost the exact same time.
+        this.promise.then(() => {
+            if (isLevels) {
+                this.spellLevelsProduced = true
+            } else {
+                this.spellsProduced = true
+            }
+
+            if (this.spellLevelsProduced && this.spellsProduced) {
+                this.updateView()
+            }
+        })
+    }
+
+    updateView() {
+        const rows = []
+
+        let levelIndex = -1
+        let previousLevel = null
+        for (let spell of spellsManager.spells) {
+            const row = this.createRow()
+
+            if (spell.level != previousLevel) {
+                if (previousLevel != null) {
+                    this.addSpellLevelEnd(rows, previousLevel)
+                }
+                ++levelIndex
+                
+                while (true) {
+                    const spellLevel = spellsManager.spellLevels[levelIndex]
+                    if (spellLevel != spell.level) {
+                        break
+                    }
+                    this.addEmptySpellLevel(rows, spellLevel)
+                    ++levelIndex
+                }
+                
+                previousLevel = spell.level
+                
+                this.putSpellLevelText(row, spellsManager.spellLevels[levelIndex])
+            }
+
+            row.querySelector(".name").innerText = spell.name
+            row.querySelector(".dice").innerText = spell.dice
+            
+            rows.push(row)
+        }
+        
+        this.addSpellLevelEnd(rows, spellsManager.spellLevels[levelIndex].level)
+        
+        for (let i = levelIndex + 1; i < spellsManager.spellLevels.length; ++i) {
+            this.addEmptySpellLevel(rows, spellsManager.spellLevels[i])
+        }
+        
+        const addSpellLevel = this.createRow()
+        addSpellLevel.querySelector(".level").innerHTML =
+            `<button type="button" class="btn bmd-btn-fab bmd-btn-fab-sm btn-secondary" data-toggle="modal" data-target="#addSpellLevel">
+                <i class="material-icons">add</i>
+            </button>`
+        rows.push(addSpellLevel)
+
+        rows.push(htmlToElement('<div class="dnd-spacer"></div>'))
+        
+        const elem = document.getElementById("spellLevelList")
+        while (elem.firstChild) {
+            elem.removeChild(elem.firstChild)
+        }
+        for (let row of rows) {
+            elem.appendChild(row)
+        }
+    }
+    
+    createRow() {
+        return htmlToElement(
+            `<div class="dnd-row">
+                <div class="level"></div>
+                <div class="name"></div>
+                <div class="dice"></div>
+            </div>`)
+    }
+    
+    addSpellLevelEnd(rows, level) {
+        const addSpell = this.createRow()
+        this.putAddSpellButton(addSpell, level)
+        rows.push(addSpell)
+
+        this.addSpacer(rows)
+    }
+    
+    addSpacer(rows) {
+        rows.push(htmlToElement('<div class="dnd-spacer"></div>'))
+    }
+    
+    putAddSpellButton(row, level) {
+        row.querySelector(".name").innerHTML =
+            `<button type="button" class="btn bmd-btn-fab bmd-btn-fab-sm btn-secondary" data-toggle="modal" data-target="#addSpell" data-level="${level}">
+                <i class="material-icons">add</i>
+            </button>`
+    }
+    
+    putSpellLevelText(row, spellLevel) {
+        let points
+        if (spellLevel.max != undefined) {
+            points = spellLevel.current + "/" + spellLevel.max
+        } else {
+            points = "free"
+        }
+        row.querySelector(".level").innerText =
+            spellLevel.level + " (" + points + ")"
+    }
+
+    addEmptySpellLevel(rows, spellLevel) {
+        const row = this.createRow()
+        row.classList.add("emptySpellLevel")
+        this.putSpellLevelText(row, spellLevel)
+        this.putAddSpellButton(row, spellLevel.level)
+        rows.push(row)
+        
+        this.addSpacer(rows)
+    }
+}
+
 main = function () {
 	if (!urlParams.get("id") && !urlParams.get("newChar")) {
 		window.location.href = "/profile.html"
@@ -310,6 +575,15 @@ main = function () {
             }
             characterManager = new CharacterManager(user.uid);
             characterController = new CharacterController();
+
+            let characterId = urlParams.get("id")
+            if (spellsManager) {
+                spellsManager.stopListening()
+            }
+            if (characterId) {
+                spellsManager = new SpellsManager(characterId);
+                spellsController = new SpellsController();
+            }
         }
     });
     

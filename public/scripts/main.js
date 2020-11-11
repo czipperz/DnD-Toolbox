@@ -65,3 +65,9 @@ rhit.main = function () {
 };
 
 rhit.main();
+
+function htmlToElement(html) {
+	const wrapper = document.createElement("div")
+	wrapper.innerHTML = html
+	return wrapper.firstChild
+}

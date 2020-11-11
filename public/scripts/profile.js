@@ -41,12 +41,6 @@ class UserManager {
 	}
 }
 
-function htmlToElement(html) {
-	const wrapper = document.createElement("div")
-	wrapper.innerHTML = html
-	return wrapper.firstChild
-}
-
 class UserController {
 	constructor(uid) {
 		this._manager = new UserManager(uid)

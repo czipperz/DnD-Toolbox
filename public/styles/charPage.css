@@ -265,7 +265,7 @@ body {
     font-size: 15px;
 }
 
-.bmd-form-group {
+#charPage .bmd-form-group {
     padding: 0;
     width: auto;
     text-align: center;
@@ -334,29 +334,40 @@ body {
 }
 
 
-#spellLevelList {
+#spellLevelListWrapper, #spellLevelList {
 	flex-grow: 1;
 	display: flex;
 	flex-flow: column nowrap;
 	font-size: 1.2rem;
 }
-#spellLevelList > .spacer {
-	border: 1px solid black;
-}
-#spellLevelList > div:first-child {
+#spellLevelListWrapper .dnd-header {
 	font-size: 1rem;
 }
-#spellLevelList > div {
+#spellLevelList .dnd-spacer {
+	border: 1px solid black;
+	margin: 4px 0;
+}
+#spellLevelList .dnd-row button {
+	margin: 8px 0;
+}
+#spellLevelListWrapper .dnd-row {
 	width: 100%;
-	flex-grow: 1;
+	flex-grow: 0;
 	
 	display: flex;
 	flex-wrap: nowrap;
 }
-#spellLevelList > div > div {
+#spellLevelListWrapper .dnd-row > div {
 	flex-basis: 0;
 	flex-grow: 1;
 	
 	display: flex;
 	padding: 0 10px;
+}
+#spellLevelList .emptySpellLevel .level {
+	align-self: center;
+}
+
+#addSpell-errors {
+	color: red;
 }
