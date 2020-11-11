@@ -491,11 +491,12 @@ class SpellsController {
             this.addEmptySpellLevel(rows, spellsManager.spellLevels[i])
         }
         
-        const addSpellLevel = this.createRow()
+        const addSpellLevel = htmlToElement(`<div class="dnd-row"><div class="level"></div>`)
         addSpellLevel.querySelector(".level").innerHTML =
             `<button type="button" class="btn bmd-btn-fab bmd-btn-fab-sm btn-secondary" data-toggle="modal" data-target="#addSpellLevel">
                 <i class="material-icons">add</i>
-            </button>`
+            </button>
+            <span data-toggle="modal" data-target="#addSpellLevel">Add Spell Level</span>`
         rows.push(addSpellLevel)
 
         rows.push(htmlToElement('<div class="dnd-spacer"></div>'))
@@ -534,7 +535,8 @@ class SpellsController {
         row.querySelector(".name").innerHTML =
             `<button type="button" class="btn bmd-btn-fab bmd-btn-fab-sm btn-secondary" data-toggle="modal" data-target="#addSpell" data-level="${level}">
                 <i class="material-icons">add</i>
-            </button>`
+            </button>
+            <span data-toggle="modal" data-target="#addSpell" data-level="${level}">Add Spell</span>`
     }
     
     putSpellLevelText(row, spellLevel) {

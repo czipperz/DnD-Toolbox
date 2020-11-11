@@ -367,6 +367,13 @@ body {
 #spellLevelList .emptySpellLevel .level {
 	align-self: center;
 }
+#spellLevelList .dnd-row span {
+	align-self: center;
+	margin-left: 8px;
+}
+#spellLevelList .dnd-row span:hover {
+	cursor: pointer;
+}
 
 #addSpell-errors {
 	color: red;
