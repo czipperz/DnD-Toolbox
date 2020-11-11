@@ -405,7 +405,7 @@ class SpellsController {
             document.getElementById("addSpellLevel-level").value = ""
             document.getElementById("addSpellLevel-max").value = ""
         })
-        $('#addSpell').on('shown.bs.modal', (event) => {
+        $('#addSpellLevel').on('shown.bs.modal', (event) => {
             document.getElementById("addSpellLevel-level").focus()
         })
         
