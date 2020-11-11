@@ -1,5 +1,5 @@
-characterManager = "";
-characterController = "";
+characterManager = null;
+characterController = null;
 const urlParams = new URLSearchParams(window.location.search);
 
 class Character {
@@ -47,6 +47,9 @@ class CharacterManager {
                 console.log("No such character!");
             }
         });
+    }
+    stopListening() {
+        this.unsubscribe()
     }
     saveChar() {
         let stats = [];
@@ -302,6 +305,9 @@ main = function () {
             window.location.href = "/"
             return
         } else {
+            if (characterManager) {
+                characterManager.stopListening()
+            }
             characterManager = new CharacterManager(user.uid);
             characterController = new CharacterController();
         }
