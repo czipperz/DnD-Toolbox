@@ -384,6 +384,17 @@ class SpellsManager {
         firebase.firestore().collection("SpellLevels")
             .doc(spellLevel.id).set({ current: spellLevel.current - 1 }, { merge: true })
     }
+    
+    refreshSpells() {
+        let batch = firebase.firestore().batch()
+        const collection = firebase.firestore().collection("SpellLevels")
+        for (let level of this.spellLevels) {
+            if (level.max != undefined) {
+                batch.update(collection.doc(level.id), {current: level.max})
+            }
+        }
+        batch.commit()
+    }
 }
 
 class SpellsController {
@@ -457,6 +468,8 @@ class SpellsController {
             
             $('#addSpellLevel').modal('hide')
         }
+        
+        document.getElementById("spellsRefreshButton").onclick = () => spellsManager.refreshSpells()
     }
     
     updateViewWrapper(isLevels) {
