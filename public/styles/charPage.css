@@ -367,11 +367,11 @@ body {
 #spellLevelList .emptySpellLevel .level {
 	align-self: center;
 }
-#spellLevelList .dnd-row span {
+#spellLevelList .dnd-row button + span {
 	align-self: center;
 	margin-left: 8px;
 }
-#spellLevelList .dnd-row span:hover {
+#spellLevelList .dnd-row span {
 	cursor: pointer;
 }
 
