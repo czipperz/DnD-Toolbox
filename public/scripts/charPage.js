@@ -4,6 +4,8 @@ spellsManager = null;
 spellsController = null;
 const urlParams = new URLSearchParams(window.location.search);
 
+dontClearDiceRollModal = false
+
 class Character {
     constructor() {
         this.name = "";
@@ -171,39 +173,15 @@ class CharacterController {
                     }
                 }
             };
-            document.querySelector("#rollButton").onclick = (event) => {
-                let dice = parseInt(document.querySelector("#numDice").value) || 0;
-                let sides = parseInt(document.querySelector("#numSides").value) || 0;
-                let mod = parseInt(document.querySelector("#rollMod").value) || 0;
-                if (dice == 0 || sides == 0) {
-                    return;
-                }
-                let resultText = "";
-                let result = 0;
-                let tempNum = 0;
-                for (let i = 0; i < dice; i++) {
-                    tempNum = Math.floor(Math.random() * sides) + 1;
-                    if (i != 0) {
-                        if (mod != 0) {
-                            resultText += (", " + tempNum.toString() + "+" + mod.toString())
-                        } else {
-                            resultText += (", " + tempNum.toString());
-                        }
-                    } else {
-                        if (mod != 0) {
-                            resultText += tempNum.toString() + "+" + mod.toString();
-                        } else {
-                            resultText += tempNum.toString();
-                        }
-                    }
-                    result += (tempNum + mod);
-                }
-                document.querySelector("#resultText").innerHTML = resultText;
-                document.querySelector("#results").innerHTML = result.toString();
-
-            }
+            
+            document.querySelector("#rollButton").onclick = this.updateRollModal.bind(this)
 
             $("#diceRollModal").on("show.bs.modal", (event) => {
+                // spells prepopulate the modal when cast
+                if (dontClearDiceRollModal) {
+                    return
+                }
+                
                 // Pre animation
                 document.querySelector("#numDice").value = "";
                 document.querySelector("#numSides").value = "";
@@ -212,6 +190,12 @@ class CharacterController {
             });
     
             $("#diceRollModal").on("shown.bs.modal", (event) => {
+                // don't focus the fields as we already filled them
+                if (dontClearDiceRollModal) {
+                    dontClearDiceRollModal = false
+                    return
+                }
+                
                 //Post animation
                 document.querySelector("#numDice").focus();
             });
@@ -219,6 +203,39 @@ class CharacterController {
         }
         
     }
+
+    updateRollModal(event) {
+        let dice = parseInt(document.querySelector("#numDice").value) || 0;
+        let sides = parseInt(document.querySelector("#numSides").value) || 0;
+        let mod = parseInt(document.querySelector("#rollMod").value) || 0;
+        if (dice == 0 || sides == 0) {
+            return;
+        }
+        let resultText = "";
+        let result = 0;
+        let tempNum = 0;
+        for (let i = 0; i < dice; i++) {
+            tempNum = Math.floor(Math.random() * sides) + 1;
+            if (i != 0) {
+                if (mod != 0) {
+                    resultText += (", " + tempNum.toString() + "+" + mod.toString())
+                } else {
+                    resultText += (", " + tempNum.toString());
+                }
+            } else {
+                if (mod != 0) {
+                    resultText += tempNum.toString() + "+" + mod.toString();
+                } else {
+                    resultText += tempNum.toString();
+                }
+            }
+            result += (tempNum + mod);
+        }
+        document.querySelector("#resultText").innerHTML = resultText;
+        document.querySelector("#results").innerHTML = result.toString();
+
+    }
+
     setupEditCharacter() {
         document.querySelectorAll(".editable").forEach((element) => {
             element.removeAttribute("disabled");
@@ -458,7 +475,8 @@ class SpellsController {
 
         let levelIndex = -1
         let previousLevel = null
-        for (let spell of spellsManager.spells) {
+        for (let spellIndex in spellsManager.spells) {
+            const spell = spellsManager.spells[spellIndex]
             const row = this.createRow()
 
             if (spell.level != previousLevel) {
@@ -482,7 +500,12 @@ class SpellsController {
             }
 
             row.querySelector(".name").innerText = spell.name
-            row.querySelector(".dice").innerText = spell.dice
+            
+            const diceSpan = document.createElement("span")
+            diceSpan.onclick = this.castSpellAndRoll.bind(this);
+            diceSpan.dataset.spellIndex = spellIndex
+            diceSpan.innerText = spell.dice
+            row.querySelector(".dice").appendChild(diceSpan)
             
             rows.push(row)
         }
@@ -510,6 +533,25 @@ class SpellsController {
         for (let row of rows) {
             elem.appendChild(row)
         }
+    }
+    
+    castSpellAndRoll(event) {
+        const spell = spellsManager.spells[event.target.dataset.spellIndex]
+        
+        const regex = /(\d+)d(\d+)(\+(\d+))?/
+        const matches = regex.exec(spell.dice)
+        if (!matches) {
+            console.log("Couldn't cast spell because invalid dice:", spell.dice)
+            return
+        }
+        
+        document.querySelector("#numDice").value = matches[1]
+        document.querySelector("#numSides").value = matches[2]
+        document.querySelector("#rollMod").value = matches[4] || ""
+        dontClearDiceRollModal = true
+        characterController.updateRollModal()
+        
+        $('#diceRollModal').modal('show')
     }
     
     createRow() {
