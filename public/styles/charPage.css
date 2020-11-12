@@ -375,6 +375,7 @@ body {
 	cursor: pointer;
 }
 
-#addSpell-errors {
+#addSpell-errors, #addSpellLevel-errors {
 	color: red;
+	margin-top: 2rem;
 }

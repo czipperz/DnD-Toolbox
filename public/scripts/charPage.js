@@ -376,6 +376,7 @@ class SpellsController {
             
             document.getElementById("addSpell-name").value = ""
             document.getElementById("addSpell-dice").value = ""
+            document.getElementById("addSpell-errors").innerText = ""
         })
         $('#addSpell').on('shown.bs.modal', (event) => {
             document.getElementById("addSpell-name").focus()
@@ -404,6 +405,7 @@ class SpellsController {
         $('#addSpellLevel').on('show.bs.modal', (event) => {
             document.getElementById("addSpellLevel-level").value = ""
             document.getElementById("addSpellLevel-max").value = ""
+            document.getElementById("addSpellLevel-errors").innerText = ""
         })
         $('#addSpellLevel').on('shown.bs.modal', (event) => {
             document.getElementById("addSpellLevel-level").focus()

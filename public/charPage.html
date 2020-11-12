@@ -473,7 +473,8 @@
           </div>
           <div class="form-group">
             <label for="addSpell-dice" class="bmd-label-floating">Dice</label>
-            <input type="text" class="form-control" id="addSpell-dice">
+            <input type="text" class="form-control" id="addSpell-dice" pattern="|\d+d\d+(\+\d+)?">
+            <span class="bmd-help">Should be either empty or of the form XdY (roll X Y-sided dies) or XdY+Z (roll X Y-sided dies and add Z to each).</span>
           </div>
           
           <div id="addSpell-errors"></div>
