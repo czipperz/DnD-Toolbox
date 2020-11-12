@@ -397,6 +397,16 @@ class SpellsManager {
         }
         batch.commit()
     }
+    
+    deleteSpell(id) {
+        firebase.firestore().collection("Spells")
+            .doc(id).delete()
+    }
+    
+    updateSpell(id, name, level, dice) {
+        firebase.firestore().collection("Spells")
+            .doc(id).set({ name, level, dice }, { merge: true })
+    }
 }
 
 class SpellsController {
@@ -452,7 +462,6 @@ class SpellsController {
             const maxE = document.getElementById("addSpellLevel-max")
             
             const errorsE = document.getElementById("addSpellLevel-errors")
-            errorsE.innerText = ""
             if (!levelE.checkValidity()) {
                 errorsE.innerText = "Must specify a level"
                 return
@@ -469,6 +478,36 @@ class SpellsController {
             spellsManager.addSpellLevel(level, max)
             
             $('#addSpellLevel').modal('hide')
+        }
+        
+        document.getElementById("editSpell-delete").onclick = () => {
+            const id = document.getElementById("editSpell").dataset.spellId
+            spellsManager.deleteSpell(id)
+        }
+        
+        document.getElementById("editSpell-submit").onclick = () => {
+            const id = document.getElementById("editSpell").dataset.spellId
+            const nameE = document.getElementById("editSpell-name")
+            const levelE = document.getElementById("editSpell-level")
+            const diceE = document.getElementById("editSpell-dice")
+            
+            const errorsE = document.getElementById("addSpellLevel-errors")
+            if (!nameE.checkValidity()) {
+                errorsE.innerText = "Must specify a name"
+                return
+            }
+            if (!levelE.checkValidity()) {
+                errorsE.innerText = "Must specify a level"
+                return
+            }
+            if (!diceE.checkValidity()) {
+                errorsE.innerText = "Invalid dice value"
+                return
+            }
+            
+            spellsManager.updateSpell(id, nameE.value, parseInt(levelE.value, 10), diceE.value)
+            
+            $('#editSpell').modal('hide')
         }
         
         document.getElementById("spellsRefreshButton").onclick = () => spellsManager.refreshSpells()
@@ -508,7 +547,7 @@ class SpellsController {
                 
                 while (true) {
                     const spellLevel = spellsManager.spellLevels[levelIndex]
-                    if (spellLevel != spell.level) {
+                    if (spellLevel.level == spell.level) {
                         break
                     }
                     this.addEmptySpellLevel(rows, spellLevel)
@@ -520,7 +559,11 @@ class SpellsController {
                 this.putSpellLevelText(row, spellsManager.spellLevels[levelIndex])
             }
 
-            row.querySelector(".name").innerText = spell.name
+            const nameSpan = document.createElement("span")
+            nameSpan.dataset.spellIndex = spellIndex
+            nameSpan.innerText = spell.name
+            nameSpan.onclick = this.editSpell.bind(this)
+            row.querySelector(".name").appendChild(nameSpan)
             
             const diceSpan = document.createElement("span")
             diceSpan.dataset.spellIndex = spellIndex
@@ -606,6 +649,17 @@ class SpellsController {
         
         console.log("invalid spell level", spell.level)
         return false
+    }
+    
+    editSpell(event) {
+        const spell = spellsManager.spells[event.target.dataset.spellIndex]
+        document.getElementById("editSpell").dataset.spellId = spell.id
+        document.getElementById("editSpell-name").value = spell.name
+        document.getElementById("editSpell-level").value = spell.level
+        document.getElementById("editSpell-dice").value = spell.dice
+        document.getElementById("editSpell-dice").innerText = ""
+        
+        $('#editSpell').modal('show')
     }
     
     createRow() {
