@@ -40,7 +40,7 @@ rhit.setupNavbarLinks = function() {
 		if (user) {
 			if (document.querySelector("#charPage")) {
 				navbarButtonsElem.innerHTML =
-				'<a href="#" data-toggle="modal" data-backdrop="static" data-target="#diceRollModal">Roll Dice</a>' +
+				'<a href="#" data-toggle="modal" data-target="#diceRollModal">Roll Dice</a>' +
 				'<a href="profile.html">Profile</a>' +
 				'<a href="#" class="logOutButton">Log out</a>'
 			} else {
