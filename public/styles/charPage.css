@@ -279,6 +279,7 @@ body {
     width: 1300px;
     overflow: inherit;
     margin: 0 auto;
+    padding: 0 8px;
 }
 
 .infoCol {
