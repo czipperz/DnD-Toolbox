@@ -186,6 +186,8 @@ class CharacterController {
                 document.querySelector("#numDice").value = "";
                 document.querySelector("#numSides").value = "";
                 document.querySelector("#rollMod").value = "";
+                document.querySelector("#resultText").innerText = "";
+                document.querySelector("#results").innerText = "";
 
             });
     
