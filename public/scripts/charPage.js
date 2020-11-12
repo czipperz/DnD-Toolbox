@@ -378,6 +378,12 @@ class SpellsManager {
         firebase.firestore().collection("SpellLevels")
             .add(obj)
     }
+    
+    decrementSpellLevelCounter(spellLevelIndex) {
+        const spellLevel = this.spellLevels[spellLevelIndex]
+        firebase.firestore().collection("SpellLevels")
+            .doc(spellLevel.id).set({ current: spellLevel.current - 1 }, { merge: true })
+    }
 }
 
 class SpellsController {
@@ -502,9 +508,14 @@ class SpellsController {
             row.querySelector(".name").innerText = spell.name
             
             const diceSpan = document.createElement("span")
-            diceSpan.onclick = this.castSpellAndRoll.bind(this);
             diceSpan.dataset.spellIndex = spellIndex
-            diceSpan.innerText = spell.dice
+            if (spell.dice != "") {
+                diceSpan.onclick = this.castSpellAndRoll.bind(this);
+                diceSpan.innerText = spell.dice
+            } else {
+                diceSpan.onclick = this.castSpellNoRoll.bind(this)
+                diceSpan.innerText = "Cast!"
+            }
             row.querySelector(".dice").appendChild(diceSpan)
             
             rows.push(row)
@@ -537,6 +548,9 @@ class SpellsController {
     
     castSpellAndRoll(event) {
         const spell = spellsManager.spells[event.target.dataset.spellIndex]
+        if (!this.castSpell(spell)) {
+            return
+        }
         
         const regex = /(\d+)d(\d+)(\+(\d+))?/
         const matches = regex.exec(spell.dice)
@@ -552,6 +566,31 @@ class SpellsController {
         characterController.updateRollModal()
         
         $('#diceRollModal').modal('show')
+    }
+    
+    castSpellNoRoll(event) {
+        const spell = spellsManager.spells[event.target.dataset.spellIndex]
+        this.castSpell(spell)
+    }
+    
+    castSpell(spell) {
+        for (let spellLevelIndex in spellsManager.spellLevels) {
+            const spellLevel = spellsManager.spellLevels[spellLevelIndex]
+            if (spellLevel.level == spell.level) {
+                if (spellLevel.current != undefined) {
+                    if (spellLevel.current == 0) {
+                        document.getElementById("noMoreSpellPoints-level").innerText = spell.level
+                        $('#noMoreSpellPoints').modal('show')
+                        return false
+                    }
+                    spellsManager.decrementSpellLevelCounter(spellLevelIndex)
+                }
+                return true
+            }
+        }
+        
+        console.log("invalid spell level", spell.level)
+        return false
     }
     
     createRow() {
