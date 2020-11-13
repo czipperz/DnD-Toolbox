@@ -409,6 +409,46 @@ class SpellsManager {
         firebase.firestore().collection("Spells")
             .doc(id).set({ name, level, dice }, { merge: true })
     }
+    
+    deleteSpellLevel(id) {
+        const spellLevel = this.spellLevels.find(l => l.id == id)
+        const cSL = firebase.firestore().collection("SpellLevels")
+        const cS = firebase.firestore().collection("Spells")
+        
+        let batch = firebase.firestore().batch()
+        batch.delete(cSL.doc(id))
+        
+        for (let spell of this.spells) {
+            if (spell.level == spellLevel.level) {
+                batch.delete(cS.doc(spell.id))
+            }
+        }
+        
+        batch.commit()
+    }
+    
+    updateSpellLevel(id, level, current, max) {
+        const spellLevel = this.spellLevels.find(l => l.id == id)
+        const cSL = firebase.firestore().collection("SpellLevels")
+        const cS = firebase.firestore().collection("Spells")
+        
+        let batch = firebase.firestore().batch()
+        
+        let obj = { level, character: this.character }
+        if (max != null) {
+            obj.current = current
+            obj.max = max
+        }
+        batch.set(cSL.doc(id), obj)
+        
+        for (let spell of this.spells) {
+            if (spell.level == spellLevel.level) {
+                batch.update(cS.doc(spell.id), { level: level })
+            }
+        }
+        
+        batch.commit()
+    }
 }
 
 class SpellsController {
@@ -510,6 +550,43 @@ class SpellsController {
             spellsManager.updateSpell(id, nameE.value, parseInt(levelE.value, 10), diceE.value)
             
             $('#editSpell').modal('hide')
+        }
+        
+        document.getElementById("editSpellLevel-delete").onclick = () => {
+            const id = document.getElementById("editSpellLevel").dataset.spellLevelId
+            spellsManager.deleteSpellLevel(id)
+        }
+        
+        document.getElementById("editSpellLevel-submit").onclick = () => {
+            const id = document.getElementById("editSpellLevel").dataset.spellLevelId
+            const levelE = document.getElementById("editSpellLevel-level")
+            const maxE = document.getElementById("editSpellLevel-max")
+            const currentE = document.getElementById("editSpellLevel-current")
+            
+            const errorsE = document.getElementById("editSpellLevel-errors")
+            if (!levelE.checkValidity()) {
+                errorsE.innerText = "Must specify a level"
+                return
+            }
+            if (!maxE.checkValidity()) {
+                errorsE.innerText = "Must specify a valid number of maximum spell points"
+                return
+            }
+            if (!currentE.checkValidity()) {
+                errorsE.innerText = "Must specify a valid number of current spell points"
+                return
+            }
+            if (maxE.value == "" && currentE.value != "") {
+                errorsE.innerText = "Must specify maximum spell points if you specify the current spell points"
+                return
+            }
+            
+            const level = parseInt(levelE.value, 10)
+            const max = maxE.value == "" ? null : parseInt(maxE.value)
+            const current = currentE.value == "" ? max : parseInt(currentE.value, 10)
+            spellsManager.updateSpellLevel(id, level, current, max)
+            
+            $('#editSpellLevel').modal('hide')
         }
         
         document.getElementById("spellsRefreshButton").onclick = () => spellsManager.refreshSpells()
@@ -696,14 +773,26 @@ class SpellsController {
     }
     
     putSpellLevelText(row, spellLevel) {
+        let span = document.createElement("span")
+        span.onclick = () => {
+            document.getElementById("editSpellLevel").dataset.spellLevelId = spellLevel.id
+            
+            document.getElementById("editSpellLevel-level").value = spellLevel.level
+            document.getElementById("editSpellLevel-current").value = (spellLevel.current != undefined ? spellLevel.current : "")
+            document.getElementById("editSpellLevel-max").value = (spellLevel.max != undefined ? spellLevel.max : "")
+            
+            $('#editSpellLevel').modal('show')
+        }
+        
         let points
         if (spellLevel.max != undefined) {
             points = spellLevel.current + "/" + spellLevel.max
         } else {
             points = "free"
         }
-        row.querySelector(".level").innerText =
-            spellLevel.level + " (" + points + ")"
+        span.innerText = spellLevel.level + " (" + points + ")"
+        
+        row.querySelector(".level").appendChild(span)
     }
 
     addEmptySpellLevel(rows, spellLevel) {

@@ -552,6 +552,42 @@
     </div>
   </div>
   
+  <div class="modal fade" id="editSpellLevel" tabindex="-1" role="dialog" aria-labelledby="Edit Spell Level" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Spell Level</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="editSpellLevel-level" class="bmd-label-floating">Level</label>
+            <input type="number" class="form-control" id="editSpellLevel-level" required min="0">
+          </div>
+          <div class="form-group">
+            <label for="editSpellLevel-max" class="bmd-label-floating">Maximum Spell Points</label>
+            <input type="number" class="form-control" id="editSpellLevel-max" min="0">
+            <span class="bmd-help">Leave empty to have no maximum.</span>
+          </div>
+          <div class="form-group">
+            <label for="editSpellLevel-current" class="bmd-label-floating">Current Spell Points</label>
+            <input type="number" class="form-control" id="editSpellLevel-current" min="0">
+            <span class="bmd-help">If empty, duplicates the value of the maximum.</span>
+          </div>
+          
+          <div id="editSpellLevel-errors"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" id="editSpellLevel-delete">Delete</button>
+          <button type="button" class="btn btn-primary" id="editSpellLevel-submit">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <div class="modal fade" id="noMoreSpellPoints" tabindex="-1" role="dialog" aria-labelledby="No More Spell Points" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
