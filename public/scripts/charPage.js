@@ -376,6 +376,7 @@ class SpellsManager {
     addSpellLevel(level, max) {
         let obj = { level, character: this.character }
         if (max != null) {
+            obj.current = max
             obj.max = max
         }
         firebase.firestore().collection("SpellLevels")
