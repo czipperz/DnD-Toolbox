@@ -580,7 +580,9 @@ class SpellsController {
             rows.push(row)
         }
         
-        this.addSpellLevelEnd(rows, spellsManager.spellLevels[levelIndex].level)
+        if (levelIndex < spellsManager.spellLevels.length && levelIndex >= 0) {
+            this.addSpellLevelEnd(rows, spellsManager.spellLevels[levelIndex].level)
+        }
         
         for (let i = levelIndex + 1; i < spellsManager.spellLevels.length; ++i) {
             this.addEmptySpellLevel(rows, spellsManager.spellLevels[i])
