@@ -23,7 +23,7 @@ service cloud.firestore {
              .data.owner == request.auth.uid;
       allow update:
       	if request.auth.uid != null
-        && request.resource.data.character == request.data.character
+        && request.resource.data.character == resource.data.character
         && get(/databases/$(database)/documents/Characters/$(resource.data.character))
              .data.owner == request.auth.uid;
       allow delete:
@@ -40,7 +40,7 @@ service cloud.firestore {
              .data.owner == request.auth.uid;
       allow update:
       	if request.auth.uid != null
-        && request.resource.data.character == request.data.character
+        && request.resource.data.character == resource.data.character
         && get(/databases/$(database)/documents/Characters/$(resource.data.character))
              .data.owner == request.auth.uid;
       allow delete:
