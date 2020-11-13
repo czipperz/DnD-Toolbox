@@ -45,6 +45,12 @@ class UserController {
 	constructor(uid) {
 		this._manager = new UserManager(uid)
 		this._manager.startListening(this.update.bind(this))
+        
+        document.getElementById("deleteCharacter-submit").onclick = () => {
+            const id = document.getElementById("deleteCharacter").dataset.characterId
+            this._manager.removeCharacter(id)
+            $('#deleteCharacter').modal('hide')
+        }
 	}
 	
 	update() {
@@ -65,7 +71,9 @@ class UserController {
 			elem.querySelector(".level").innerText = c.level
 			elem.querySelector(".race").innerText = c.race
 			elem.querySelector(".delete").onclick = () => {
-				this._manager.removeCharacter(c.id)
+                document.getElementById("deleteCharacter").dataset.characterId = c.id
+                document.getElementById("deleteCharacter-name").innerText = c.name
+                $('#deleteCharacter').modal('show')
 			}
 			
 			newList.appendChild(elem)
