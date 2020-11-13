@@ -66,6 +66,10 @@ body {
     cursor: default;
 }
 
+.invSquare2 .bmd-form-group {
+	margin-top: 0.5rem;
+}
+
 #statCol {
     display: flex;
     flex-direction: row;
@@ -152,17 +156,13 @@ body {
 .invRow {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     width: 100%;
 }
 
 .col2Text {
     font-size: 15px;
-}
-
-#minusHealth, #plusHealth, #minusTempHealth, #plusTempHealth {
-    margin: 0 20px;
 }
 
 #hitDice, #deathSave {
