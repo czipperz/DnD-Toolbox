@@ -171,6 +171,7 @@ class CharacterController {
                         int += direction;
                         valButton.value = int;
                     }
+                    characterManager.saveChar()
                 }
             };
             
